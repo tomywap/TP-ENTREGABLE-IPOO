@@ -11,10 +11,10 @@ class ResponsableV extends Persona{
 	}
 
 	public function getNumEmpleado() {
-		return $this->id;
+		return $this->numEmpleado;
 	}
 	public function setNumEmpleado($value) {
-		$this->id = $value;
+		$this->numEmpleado = $value;
 	}
 
 	public function getNumLicencia() {
