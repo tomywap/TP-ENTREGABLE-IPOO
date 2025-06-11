@@ -59,4 +59,59 @@ class Persona{
 	}
 
 
+	public function insertar(){
+		$base = new BaseDatos();
+		$resp = false;
+		$consultaPersona = "INSERT INTO persona(nombre,apellido,dni) 
+		VALUES (".$this->getDni().",'".$this->getApellido()."','".$this->getNombre()."')";
+		if($base->Iniciar()){
+			if($base->Ejecutar($consultaPersona)){
+				$resp = true;
+			} else {
+				$base->getERROR();
+			}
+		} else {
+				$base->getERROR();
+			}
+		return $resp;
+	}
+
+	public function modificar(){
+		$base = new BaseDatos();
+		$resp = false;
+		$consultaPersona = "UPDATE persona SET papellido='".$this->getApellido()."',pnombre='".$this->getNombre()."' WHERE pdocumento=". $this->getDni();
+		if($base->Iniciar()){
+			if($base->Ejecutar($consultaPersona)){
+				$resp = true;
+			} else {
+				$base->getERROR();
+			}
+		} else {
+				$base->getERROR();
+			}
+		return $resp;
+	}
+
+	public function eliminar(){
+		$base = new BaseDatos();
+		$resp = false;
+		if($base->Iniciar()){
+			$consultaBorra = "DELETE FROM persona WHERE pdocumento=". $this->getDni();
+			if($base->Ejecutar($consultaBorra)){
+				$resp = true;
+			} else {
+				$base->getERROR();
+			}
+		} else {
+				$base->getERROR();
+			}
+		return $resp;
+	}
+
+	public function __toString()
+	{
+		return "\nNombre: " . $this->getNombre().
+		"\nApellido: " . $this->getApellido(). 
+		"\nDNI: " . $this->getDni();
+	}
 }
