@@ -1,47 +1,27 @@
 <?php
-
-class ResponsableV{
-    private $id;
+include_once 'persona.php';
+class ResponsableV extends Persona{
+    private $numEmpleado;
     private $numLicencia;
-    private $nombre;
-    private $apellido;
 
-	public function __construct($id, $numLicencia, $nombre, $apellido) {
-		$this->id = $id;
+	public function __construct($numEmpleado, $numLicencia, $nombre, $apellido, $dni) {
+		parent::__construct($nombre, $apellido, $dni);
+		$this->numEmpleado = $numEmpleado;
 		$this->numLicencia = $numLicencia;
-		$this->nombre = $nombre;
-		$this->apellido = $apellido;
 	}
 
-	public function getId() {
+	public function getNumEmpleado() {
 		return $this->id;
 	}
-
-	public function setId($value) {
+	public function setNumEmpleado($value) {
 		$this->id = $value;
 	}
 
 	public function getNumLicencia() {
 		return $this->numLicencia;
 	}
-
 	public function setNumLicencia($value) {
 		$this->numLicencia = $value;
 	}
 
-	public function getNombre() {
-		return $this->nombre;
-	}
-
-	public function setNombre($value) {
-		$this->nombre = $value;
-	}
-
-	public function getApellido() {
-		return $this->apellido;
-	}
-
-	public function setApellido($value) {
-		$this->apellido = $value;
-	}
 }

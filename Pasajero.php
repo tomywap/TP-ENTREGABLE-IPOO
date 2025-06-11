@@ -1,49 +1,19 @@
 <?php
+include_once 'persona.php';
 
-class Pasajero{
+class Pasajero extends Persona{
 	//Atributos
-    private $nombre;
-    private $apellido;
-    private $documento;
-    private $telefono;
+    private $tel;
 
-
-	public function __construct($nombre, $apellido, $documento, $telefono) {
-		$this->nombre = $nombre;
-		$this->apellido = $apellido;
-		$this->documento = $documento;
-		$this->telefono = $telefono;
+	public function __construct($nombre, $apellido, $dni, $tel) {
+		parent::__construct($nombre, $apellido, $dni);
+		$this->tel = $tel;
 	}
 
-	public function getNombre() {
-		return $this->nombre;
-	}
-
-	public function setNombre($value) {
-		$this->nombre = $value;
-	}
-
-	public function getApellido() {
-		return $this->apellido;
-	}
-
-	public function setApellido($value) {
-		$this->apellido = $value;
-	}
-
-	public function getDocumento() {
-		return $this->documento;
-	}
-
-	public function setDocumento($value) {
-		$this->documento = $value;
-	}
-
-	public function getTelefono() {
+	public function getTel() {
 		return $this->telefono;
 	}
-
-	public function setTelefono($value) {
+	public function setTel($value) {
 		$this->telefono = $value;
 	}
 
