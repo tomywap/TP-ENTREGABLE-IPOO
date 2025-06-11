@@ -1,6 +1,7 @@
 <?php
 
 class Pasajero{
+	//Atributos
     private $nombre;
     private $apellido;
     private $documento;
