@@ -4,16 +4,15 @@ class Persona{
     private $apellido;
     private $dni;
 
-	public function __construct($nombre, $apellido, $dni) {
-		$this->nombre = $nombre;
-		$this->apellido = $apellido;
-		$this->dni = $dni;
+	public function __construct() {
+		$this->nombre = "";
+		$this->apellido = "";
+		$this->dni = "";
 	}
 
 	public function getNombre() {
 		return $this->nombre;
 	}
-
 	public function setNombre($value) {
 		$this->nombre = $value;
 	}
@@ -21,7 +20,6 @@ class Persona{
 	public function getApellido() {
 		return $this->apellido;
 	}
-
 	public function setApellido($value) {
 		$this->apellido = $value;
 	}
@@ -29,8 +27,24 @@ class Persona{
 	public function getDni() {
 		return $this->dni;
 	}
-
 	public function setDni($value) {
 		$this->dni = $value;
+	}
+
+	public function cargarPersona($nombre, $apellido, $dni){
+		$this->setNombre($nombre);
+		$this->setApellido($apellido);
+		$this->setDni($dni);
+	}
+
+	public function buscarPersona($dni){
+		$base = new BaseDatos();
+		$consultaPersona = "SELECT * FROM Persona WHERE pdocumento=".$dni;
+		$resp = false;
+		if ($base->Iniciar()) {
+			if ($base->Ejecutar($consultaPersona)) {
+				
+			}
+		}
 	}
 }

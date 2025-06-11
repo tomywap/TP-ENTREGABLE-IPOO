@@ -2,12 +2,12 @@
 class Empresa{
     private $nombreEmpresa;
     private $idEmpresa;
-    private $colViajes;
+    private $direccion;
 
-	public function __construct($nombreEmpresa, $idEmpresa, $viajes = []) {
+	public function __construct($nombreEmpresa, $idEmpresa, $direccion) {
 		$this->nombreEmpresa = $nombreEmpresa;
 		$this->idEmpresa = $idEmpresa;
-		$this->viajes = $viajes;
+		$this->direccion = $direccion;
 	}
 
 	public function getNombreEmpresa() {
@@ -24,14 +24,10 @@ class Empresa{
 		$this->idEmpresa = $value;
 	}
 
-	public function getViajes() {
-		return $this->viajes;
+	public function getDireccion() {
+		return $this->direccion;
 	}
-	public function setViajes($value) {
-		$this->viajes[] = $value;
+	public function setDireccion($value) {
+		$this->direccion = $value;
 	}
-
-    public function buscarViaje(){
-        
-    }
 }

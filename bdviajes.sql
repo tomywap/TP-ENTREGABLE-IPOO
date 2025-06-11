@@ -39,4 +39,9 @@ CREATE TABLE pasajero (
 	FOREIGN KEY (idviaje) REFERENCES viaje (idviaje)	
     )ENGINE=InnoDB DEFAULT CHARSET=utf8; 
  
-  
+CREATE TABLE persona(
+    nombre varchar(150),
+    apellido varchar(150),
+    dni varchar(15),
+    
+)
