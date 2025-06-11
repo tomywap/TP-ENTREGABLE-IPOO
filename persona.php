@@ -39,12 +39,24 @@ class Persona{
 
 	public function buscarPersona($dni){
 		$base = new BaseDatos();
-		$consultaPersona = "SELECT * FROM Persona WHERE pdocumento=".$dni;
+		$consultaPersona = "SELECT * FROM persona WHERE pdocumento=".$dni;
 		$resp = false;
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consultaPersona)) {
-				
+				if ($row2 = $base->Registro()) {
+					$this->setDni($dni);
+					$this->setNombre($row2["pnombre"]);
+					$this->setApellido($row2["papellido"]);
+					$resp = true;
+				}
+			} else {
+				$base->getERROR();
 			}
+		} else {
+				$base->getERROR();
 		}
+		return $resp;
 	}
+
+
 }

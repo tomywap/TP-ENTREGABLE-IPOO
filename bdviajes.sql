@@ -34,14 +34,15 @@ CREATE TABLE pasajero (
     pnombre varchar(150), 
     papellido varchar(150), 
 	ptelefono int, 
+    idpasajero bigint AUTO_INCREMENT,
 	idviaje bigint,
-    PRIMARY KEY (pasajero),
+    PRIMARY KEY (idpasajero),
 	FOREIGN KEY (idviaje) REFERENCES viaje (idviaje)	
-    )ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
  
 CREATE TABLE persona(
-    nombre varchar(150),
-    apellido varchar(150),
-    dni varchar(15),
-    
-)
+    pnombre varchar(150), 
+    papellido varchar(150),
+    pdocumento varchar(15),
+    PRIMARY KEY (pdocumento),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
