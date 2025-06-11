@@ -11,10 +11,10 @@ class Pasajero extends Persona{
 	}
 
 	public function getTel() {
-		return $this->telefono;
+		return $this->tel;
 	}
 	public function setTel($value) {
-		$this->telefono = $value;
+		$this->tel = $value;
 	}
 
 }
