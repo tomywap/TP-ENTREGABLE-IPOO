@@ -47,20 +47,18 @@ class Persona{
 		$this->setDni($dni);
 	}
 	
-	 public  function listar($condicion=""){
+	public  function listar($condicion=""){
         $arregloPersona = null;
         $base=new BaseDatos();
         $consultaPersonas="SELECT * FROM persona ";
         if ($condicion!=""){
             $consultaPersonas=$consultaPersonas.' WHERE '.$condicion;
         }
-        $consultaPersonas.=" order by idpersonas ";
-        
+        $consultaPersonas.=" order by pdocumento ";
         if($base->Iniciar()){
             if($base->Ejecutar($consultaPersonas)){
                 $arregloPersona= array();
                 while($row2=$base->Registro()){
-
                     $dni=$row2['pdocumento'];
                     $nombre=$row2['pnombre'];
                     $apellido=$row2['papellido'];
@@ -68,13 +66,13 @@ class Persona{
                     $perso->cargarPersona($dni,$nombre,$apellido);
                     array_push($arregloPersona,$perso);
                 }
-             }    else {
-                     $this->setMensaje($base->getERROR());
+            }    else {
+                $this->setMensaje($base->getERROR());
             }
-         }    else {
-                 $this->setMensaje($base->getERROR());
-         }
-         return $arregloPersona;
+        }    else {
+            $this->setMensaje($base->getERROR());
+        }
+        return $arregloPersona;
     }
 
 	public function buscarPersona($dni){
@@ -90,11 +88,11 @@ class Persona{
 					$resp = true;
 				}
 			}    else {
-                     $this->setMensaje($base->getERROR());
+                $this->setMensaje($base->getERROR());
             }
-         }    else {
-                 $this->setMensaje($base->getERROR());
-         }
+        }    else {
+            $this->setMensaje($base->getERROR());
+        }
 		return $resp;
 	}
 
@@ -102,17 +100,17 @@ class Persona{
 	public function insertar(){
 		$base = new BaseDatos();
 		$resp = false;
-		$consultaPersona = "INSERT INTO persona(pnombre,papellido,pdocumento) 
+		$consultaPersona = "INSERT INTO persona(pdocumento,papellido,pnombre) 
 		VALUES (".$this->getDni().",'".$this->getApellido()."','".$this->getNombre()."')";
 		if($base->Iniciar()){
 			if($base->Ejecutar($consultaPersona)){
 				$resp = true;
-			}    else {
-                     $this->setMensaje($base->getERROR());
+			}   else {
+                $this->setMensaje($base->getERROR());
             }
-         }    else {
-                 $this->setMensaje($base->getERROR());
-         }
+        }    else {
+            $this->setMensaje($base->getERROR());
+        }
 		return $resp;
 	}
 
@@ -124,11 +122,11 @@ class Persona{
 			if($base->Ejecutar($consultaPersona)){
 				$resp = true;
 			}    else {
-                     $this->setMensaje($base->getERROR());
+                $this->setMensaje($base->getERROR());
             }
-         }    else {
-                 $this->setMensaje($base->getERROR());
-         }
+        }    else {
+            $this->setMensaje($base->getERROR());
+        }
 		return $resp;
 	}
 
@@ -140,11 +138,11 @@ class Persona{
 			if($base->Ejecutar($consultaBorra)){
 				$resp = true;
 			}    else {
-                     $this->setMensaje($base->getERROR());
+                $this->setMensaje($base->getERROR());
             }
-         }    else {
-                 $this->setMensaje($base->getERROR());
-         }
+        }    else {
+                $this->setMensaje($base->getERROR());
+        }
 		return $resp;
 	}
 
