@@ -4,10 +4,14 @@ include_once 'persona.php';
 class Pasajero extends Persona{
 	//Atributos
     private $tel;
+	private $idPasajero;
+	private $objViaje;
 
-	public function __construct($nombre, $apellido, $dni, $tel) {
+	public function __construct($nombre, $apellido, $dni, $tel,$idPasajero,$objViaje) {
 		parent::__construct($nombre, $apellido, $dni);
 		$this->tel = $tel;
+		$this->idPasajero=$idPasajero;
+		$this->objViaje=$objViaje;
 	}
 
 	public function getTel() {
@@ -17,4 +21,71 @@ class Pasajero extends Persona{
 		$this->tel = $value;
 	}
 
+	public function getIdPasajero() {
+		return $this->idPasajero;
+	}
+
+	public function setIdPasajero($value) {
+		$this->idPasajero = $value;
+	}
+
+	public function getObjViaje() {
+		return $this->objViaje;
+	}
+
+	public function setObjViaje($value) {
+		$this->objViaje = $value;
+	}
+
+	public function buscarPasajero($idPasajero){
+		$base = new BaseDatos();
+		$consultaPersona = "SELECT * FROM pasajero WHERE idpasajero=".$idPasajero;
+		$resp = false;
+		if ($base->Iniciar()) {
+			if ($base->Ejecutar($consultaPersona)) {
+				if ($row2 = $base->Registro()) {
+					parent::buscarPersona($this->getDni());
+					$this->setIdPasajero($idPasajero);
+					$this->setTel($row2["ptelefono"]);
+					$this->setObjViaje($row2["idviaje"]);
+					$resp = true;
+				}
+			} else {
+				$base->getERROR();
+			}
+		} else {
+				$base->getERROR();
+		}
+		return $resp;
+	}
+
+	public function insertarPasajero(){
+		$base = new BaseDatos();
+		$idViaje = $this->getObjViaje()->getIdviaje();
+		$resp = false;
+		if(parent::insertar()){
+			$consultaPersona = "INSERT INTO pasajero(pdocumento,ptelefono,idviaje) 
+		    VALUES (".$this->getDni().",'".$this->getTel()."','".$idViaje."')";
+			    if($base->Iniciar()){
+			       if($base->Ejecutar($consultaPersona)){
+				        $resp = true;
+			        } else {
+					$base->getERROR();
+				}
+		    	} else {
+					$base->getERROR();
+				}
+			return $resp;
+	    }
+    }
+
+	public function modificar(){
+		$base = new BaseDatos();
+		$resp = false;
+		if (parent::modificar()) {
+                $consultaUpdate = "UPDATE pasajero SET ptelefono = '" . $this->getTel() . "', idviaje = '" . $this->getObjViaje() . "' WHERE idpasajeros = '" . $this->getIdPasajero() . "'";
+            }
+		return $resp;
+	}
+	
 }
