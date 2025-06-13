@@ -72,18 +72,18 @@ class Pasajero extends Persona{
 		$resp = false;
 		if(parent::insertar()){
 			$consultaPersona = "INSERT INTO pasajero(pdocumento,ptelefono,idviaje) 
-		    VALUES (".$this->getDni().",'".$this->getTel()."','".$idViaje."')";
-			    if($base->Iniciar()){
-			       if($base->Ejecutar($consultaPersona)){
-				        $resp = true;
-			        } else {
+			VALUES (".$this->getDni().",'".$this->getTel()."','".$idViaje."')";
+				if($base->Iniciar()){
+					if($base->Ejecutar($consultaPersona)){
+						$resp = true;
+					} else {
 					$base->getERROR();
 				}
-		    	} else {
+				} else {
 					$base->getERROR();
 				}
 			return $resp;
-	    }
+		}
     }
 
 	public function modificar(){
@@ -94,13 +94,11 @@ class Pasajero extends Persona{
             }
 		return $resp;
 	}
-	
-
 
 	public function __toString()
 	{
 		return "Telefono: " . $this->getTel().
 		"Id pasajero: " . $this->getIdPasajero().
-	    "Obj: " . $this->getObjViaje()->getIdViaje();
+		"Obj: " . $this->getObjViaje()->getIdViaje();
 	}
 }

@@ -40,13 +40,12 @@ class Persona{
 		$this->mensaje = $value;
 	}
 	
-	
 	public function cargarPersona($nombre, $apellido, $dni){
 		$this->setNombre($nombre);
 		$this->setApellido($apellido);
 		$this->setDni($dni);
 	}
-	
+
 	public  function listar($condicion=""){
         $arregloPersona = null;
         $base=new BaseDatos();
@@ -95,7 +94,6 @@ class Persona{
         }
 		return $resp;
 	}
-
 
 	public function insertar(){
 		$base = new BaseDatos();
@@ -152,6 +150,4 @@ class Persona{
 		"\nApellido: " . $this->getApellido(). 
 		"\nDNI: " . $this->getDni();
 	}
-
-
 }
