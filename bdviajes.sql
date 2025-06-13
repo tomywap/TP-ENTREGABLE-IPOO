@@ -45,4 +45,4 @@ CREATE TABLE persona(
     papellido varchar(150),
     pdocumento varchar(15),
     PRIMARY KEY (pdocumento),
-) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

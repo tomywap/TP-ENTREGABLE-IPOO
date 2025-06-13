@@ -36,6 +36,13 @@ class Pasajero extends Persona{
 	public function setObjViaje($value) {
 		$this->objViaje = $value;
 	}
+	public function cargar($dni, $nombre, $apellido, $idPasajero, $tel, $objViaje) {
+        parent::cargarPersona($dni, $nombre, $apellido);
+        // Asigna los valores adicionales
+        $this->setTel($tel);
+        $this->setObjViaje($objViaje);
+        $this->setIdPasajero($idPasajero);
+    }
 
 	public function buscarPasajero($idPasajero){
 		$base = new BaseDatos();
@@ -83,9 +90,17 @@ class Pasajero extends Persona{
 		$base = new BaseDatos();
 		$resp = false;
 		if (parent::modificar()) {
-                $consultaUpdate = "UPDATE pasajero SET ptelefono = '" . $this->getTel() . "', idviaje = '" . $this->getObjViaje() . "' WHERE idpasajeros = '" . $this->getIdPasajero() . "'";
+                $consultaUpdate = "UPDATE pasajero SET ptelefono = '" . $this->getTel() . "', idviaje = '" . $this->getObjViaje()->getIdviaje() . "' WHERE idpasajero = '" . $this->getIdPasajero() . "'";
             }
 		return $resp;
 	}
 	
+
+
+	public function __toString()
+	{
+		return "Telefono: " . $this->getTel().
+		"Id pasajero: " . $this->getIdPasajero().
+	    "Obj: " . $this->getObjViaje()->getIdViaje();
+	}
 }
