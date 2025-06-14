@@ -6,12 +6,14 @@ class Pasajero extends Persona{
     private $tel;
 	private $idPasajero;
 	private $objViaje;
+	private $mensaje;
 
-	public function __construct($nombre, $apellido, $dni, $tel,$idPasajero,$objViaje) {
+	//puse valores predeterminados para poder crear el objeto sin parametros. (esto es especialmente util en listarPasajeros()).
+	public function __construct($nombre = "", $apellido = "", $dni = "", $tel = "",$idPasajero = "",$objViaje = null) {
 		parent::__construct($nombre, $apellido, $dni);
 		$this->tel = $tel;
-		$this->idPasajero=$idPasajero;
-		$this->objViaje=$objViaje;
+		$this->idPasajero = $idPasajero;
+		$this->objViaje = $objViaje;
 	}
 
 	public function getTel() {
@@ -24,7 +26,6 @@ class Pasajero extends Persona{
 	public function getIdPasajero() {
 		return $this->idPasajero;
 	}
-
 	public function setIdPasajero($value) {
 		$this->idPasajero = $value;
 	}
@@ -32,66 +33,138 @@ class Pasajero extends Persona{
 	public function getObjViaje() {
 		return $this->objViaje;
 	}
-
 	public function setObjViaje($value) {
 		$this->objViaje = $value;
 	}
-	public function cargar($dni, $nombre, $apellido, $idPasajero, $tel, $objViaje) {
-        parent::cargarPersona($dni, $nombre, $apellido);
-        // Asigna los valores adicionales
+	
+	public function cargarPasajero($dni, $nombre, $apellido, $tel, $idPasajero, $objViaje) {
+		parent::cargarPersona($dni, $nombre, $apellido);
         $this->setTel($tel);
         $this->setObjViaje($objViaje);
         $this->setIdPasajero($idPasajero);
     }
 
-	public function buscarPasajero($idPasajero){
+	public function getMensaje() {
+		return $this->mensaje;
+	}
+	public function setMensaje($value) {
+		$this->mensaje = $value;
+	}
+	
+	//modifiqué la logica del metodo para que busque por DNI en vez de id.
+	//esto es necesario porque el metodo heredado (buscarPersona() de Persona) recibe como parametro el DNI.
+	//la linea 67 esta comentada porque como le vamos a asignar un id a un objeto completo.
+	public function buscarPasajero($dni){
 		$base = new BaseDatos();
-		$consultaPersona = "SELECT * FROM pasajero WHERE idpasajero=".$idPasajero;
+		$consultaPasajero = "SELECT * FROM pasajero WHERE pdocumento='" . $dni . "'";
 		$resp = false;
 		if ($base->Iniciar()) {
-			if ($base->Ejecutar($consultaPersona)) {
+			if ($base->Ejecutar($consultaPasajero)) {
 				if ($row2 = $base->Registro()) {
-					parent::buscarPersona($this->getDni());
-					$this->setIdPasajero($idPasajero);
+					parent::buscarPersona($dni);
+					$this->setIdPasajero($row2['idpasajero']);
 					$this->setTel($row2["ptelefono"]);
-					$this->setObjViaje($row2["idviaje"]);
+					//$this->setObjViaje($row2["idviaje"]);
 					$resp = true;
 				}
 			} else {
-				$base->getERROR();
+				$this->setMensaje($base->getERROR());
 			}
 		} else {
-				$base->getERROR();
+				$this->setMensaje($base->getERROR());
 		}
 		return $resp;
 	}
 
+	//los ternarios estan porque en unos testeos me tiraba error si el objViaje era null (y eso pasa seguido).
 	public function insertarPasajero(){
 		$base = new BaseDatos();
-		$idViaje = $this->getObjViaje()->getIdviaje();
 		$resp = false;
+		$idViaje = $this->getObjViaje() != null ? $this->getObjViaje()->getIdviaje() : null;
 		if(parent::insertar()){
-			$consultaPersona = "INSERT INTO pasajero(pdocumento,ptelefono,idviaje) 
-			VALUES (".$this->getDni().",'".$this->getTel()."','".$idViaje."')";
+			$consultaPasajero = "INSERT INTO pasajero(pdocumento,ptelefono,idviaje) 
+			VALUES ('".$this->getDni()."','".$this->getTel()."',".($idViaje !== null ? "'$idViaje'" : "null").")";
 				if($base->Iniciar()){
-					if($base->Ejecutar($consultaPersona)){
+					if($base->Ejecutar($consultaPasajero)){
 						$resp = true;
 					} else {
-					$base->getERROR();
+					$this->setMensaje($base->getERROR());
 				}
 				} else {
-					$base->getERROR();
+					$this->setMensaje($base->getERROR());
 				}
 			return $resp;
 		}
     }
 
-	public function modificar(){
+	//modificado el modificar() (xd)
+	//basicamente no hacia nada antes.
+	//los ternarios por los null etc etc.
+	public function modificarPasajero(){
 		$base = new BaseDatos();
 		$resp = false;
-		if (parent::modificar()) {
-                $consultaUpdate = "UPDATE pasajero SET ptelefono = '" . $this->getTel() . "', idviaje = '" . $this->getObjViaje()->getIdviaje() . "' WHERE idpasajero = '" . $this->getIdPasajero() . "'";
+		$idViaje = $this->getObjViaje() != null ? $this->getObjViaje()->getIdviaje() : null;
+		if (parent::modificar()){
+            $consultaUpdate = "UPDATE pasajero SET ptelefono = '" . $this->getTel() . "', idviaje = " . ($idViaje != null ? "'$idViaje'" : "null") . " WHERE idpasajero = '" . $this->getIdPasajero() . "'";
+            if ($base->Iniciar()) {
+				if ($base->Ejecutar($consultaUpdate)) {
+					$resp = true;
+				} else {
+					$this->setMensaje($base->getERROR());
+				}
+			} else {
+				$this->setMensaje($base->getERROR());
+			}
+		}
+		return $resp;
+	}
+
+	//creado el metodo listarPasajeros().
+	public  function listarPasajeros($condicion=""){
+        $arregloPasajero = null;
+        $base=new BaseDatos();
+        $consultaPasajero="SELECT * FROM pasajero ";
+        if ($condicion!=""){
+            $consultaPasajero=$consultaPasajero.' WHERE '.$condicion;
+        }
+        $consultaPasajero .= " order by idpasajero ";
+        if($base->Iniciar()){
+            if($base->Ejecutar($consultaPasajero)){
+                $arregloPasajero = array();
+                while($row2 = $base->Registro()){
+                    $dni = $row2['pdocumento'];
+                    $nombre = $row2['pnombre'];
+                    $apellido = $row2['papellido'];
+					$tel = $row2['ptelefono'];
+					$idPasajero = $row2['idpasajero'];
+					$objViaje = null;
+                    $pasajero = new Pasajero();
+                    $pasajero->cargarPasajero($dni, $nombre, $apellido, $tel, $idPasajero, $objViaje);
+                    array_push($arregloPasajero, $pasajero);
+                }
+            }    else {
+                $this->setMensaje($base->getERROR());
             }
+        }    else {
+            $this->setMensaje($base->getERROR());
+        }
+        return $arregloPasajero;
+    }
+
+	//no testeado, pero deberia estar bien
+	public function eliminar(){
+		$base = new BaseDatos();
+		$resp = false;
+		if($base->Iniciar()){
+			$consultaBorra = "DELETE FROM pasajero WHERE idpasajero=". $this->getIdPasajero();
+			if($base->Ejecutar($consultaBorra)){
+				$resp = true;
+			}    else {
+				$this->setMensaje($base->getERROR());
+            }
+        }    else {
+			$this->setMensaje($base->getERROR());
+        }
 		return $resp;
 	}
 
