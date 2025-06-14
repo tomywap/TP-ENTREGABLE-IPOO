@@ -32,10 +32,10 @@ class Persona{
 	public function setDni($value) {
 		$this->dni = $value;
 	}
+
 	public function getMensaje() {
 		return $this->mensaje;
 	}
-
 	public function setMensaje($value) {
 		$this->mensaje = $value;
 	}
@@ -53,17 +53,17 @@ class Persona{
         if ($condicion!=""){
             $consultaPersonas=$consultaPersonas.' WHERE '.$condicion;
         }
-        $consultaPersonas.=" order by pdocumento ";
+        $consultaPersonas .= " order by pdocumento ";
         if($base->Iniciar()){
             if($base->Ejecutar($consultaPersonas)){
-                $arregloPersona= array();
-                while($row2=$base->Registro()){
-                    $dni=$row2['pdocumento'];
-                    $nombre=$row2['pnombre'];
-                    $apellido=$row2['papellido'];
-                    $perso = new Persona();
-                    $perso->cargarPersona($dni,$nombre,$apellido);
-                    array_push($arregloPersona,$perso);
+                $arregloPersona = array();
+                while($row2 = $base->Registro()){
+                    $dni = $row2['pdocumento'];
+                    $nombre = $row2['pnombre'];
+                    $apellido = $row2['papellido'];
+                    $persona = new Persona();
+                    $persona->cargarPersona($nombre, $apellido, $dni);
+                    array_push($arregloPersona, $persona);
                 }
             }    else {
                 $this->setMensaje($base->getERROR());
@@ -128,6 +128,7 @@ class Persona{
 		return $resp;
 	}
 
+	//metodo eliminar() hecho en la call de ds.
 	public function eliminar(){
 		$base = new BaseDatos();
 		$resp = false;
@@ -136,14 +137,33 @@ class Persona{
 			if($base->Ejecutar($consultaBorra)){
 				$resp = true;
 			}    else {
-                $this->setMensaje($base->getERROR());
+				$this->setMensaje($base->getERROR());
             }
         }    else {
-                $this->setMensaje($base->getERROR());
+			$this->setMensaje($base->getERROR());
         }
 		return $resp;
 	}
 
+	// Metodo eliminar() pero recibe como parametro un numero de dni, condiciona si es numerico y elimina la entrada de la tabla cuyo pdocumento coincida con el dni ingresado.
+	// public function eliminar($dni){
+	// 	$base = new BaseDatos();
+	// 	$resp = false;
+	// 	if (is_numeric($dni)) {
+	// 		if($base->Iniciar()){
+	// 			$consultaBorra = "DELETE FROM persona WHERE pdocumento=". $dni;
+	// 			if($base->Ejecutar($consultaBorra)){
+	// 				$resp = true;
+	// 			}    else {
+	// 				$this->setMensaje($base->getERROR());
+	// 			}
+	// 		}    else {
+	// 				$this->setMensaje($base->getERROR());
+	// 		}
+	// 	}
+	// 	return $resp;
+	// }
+	
 	public function __toString()
 	{
 		return "\nNombre: " . $this->getNombre().
