@@ -122,7 +122,7 @@ class ResponsableV extends Persona{
         return $arregloResponsables;
     }
 
-		public function eliminar(){
+	public function eliminar(){
 		$base = new BaseDatos();
 		$resp = false;
 		if($base->Iniciar()){

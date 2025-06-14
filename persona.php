@@ -74,14 +74,14 @@ class Persona{
         return $arregloPersona;
     }
 
-	public function buscarPersona($dni){
+	public function buscarPersona(){
 		$base = new BaseDatos();
-		$consultaPersona = "SELECT * FROM persona WHERE pdocumento=".$dni;
+		$consultaPersona = "SELECT * FROM persona WHERE pdocumento=".$this->getDni();
 		$resp = false;
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consultaPersona)) {
 				if ($row2 = $base->Registro()) {
-					$this->setDni($dni);
+					$this->setDni($row2['pdocumento']);
 					$this->setNombre($row2["pnombre"]);
 					$this->setApellido($row2["papellido"]);
 					$resp = true;
