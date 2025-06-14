@@ -30,4 +30,10 @@ class Empresa{
 	public function setDireccion($value) {
 		$this->direccion = $value;
 	}
+	public function cargar($nombreEmpresa,$idEmpresa, $direccion){
+        $this->setNombreEmpresa ($nombreEmpresa); 
+		$this->setIdEmpresa($idEmpresa);        
+        $this->setDireccion($direccion);
+    }
+
 }
