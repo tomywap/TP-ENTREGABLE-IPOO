@@ -37,34 +37,34 @@ class Pasajero extends Persona{
 		$this->objViaje = $value;
 	}
 	
-	public function cargarPasajero($dni, $nombre, $apellido, $tel, $idPasajero, $objViaje) {
-		parent::cargarPersona($dni, $nombre, $apellido);
-        $this->setTel($tel);
-        $this->setObjViaje($objViaje);
-        $this->setIdPasajero($idPasajero);
-    }
-
 	public function getMensaje() {
 		return $this->mensaje;
 	}
 	public function setMensaje($value) {
 		$this->mensaje = $value;
 	}
+
+	public function cargarPasajero($dni, $nombre, $apellido, $tel, $idPasajero, $objViaje) {
+		parent::cargarPersona($dni, $nombre, $apellido);
+        $this->setTel($tel);
+        $this->setObjViaje($objViaje);
+        $this->setIdPasajero($idPasajero);
+    }
 	
-	//modifiqué la logica del metodo para que busque por DNI en vez de id.
-	//esto es necesario porque el metodo heredado (buscarPersona() de Persona) recibe como parametro el DNI.
-	//la linea 67 esta comentada porque como le vamos a asignar un id a un objeto completo.
-	public function buscarPasajero($dni){
+	//modificado para que funcione la busqueda por idpasajero, antes estaba por DNI y quedaba redundante la primary key.
+	public function buscarPasajero(){
 		$base = new BaseDatos();
-		$consultaPasajero = "SELECT * FROM pasajero WHERE pdocumento='" . $dni . "'";
+		$consultaPasajero = "SELECT * FROM pasajero WHERE idpasajero='" . $this->getIdPasajero() . "'";
 		$resp = false;
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consultaPasajero)) {
 				if ($row2 = $base->Registro()) {
-					parent::buscarPersona($dni);
-					$this->setIdPasajero($row2['idpasajero']);
+					$this->setNombre($row2['pnombre']);
+					$this->setApellido($row2['papellido']);
+					$this->setDni($row2['pdocumento']);
 					$this->setTel($row2["ptelefono"]);
-					//$this->setObjViaje($row2["idviaje"]);
+					$this->setIdPasajero($row2['idpasajero']);
+					$this->setObjViaje($row2["idviaje"]);
 					$resp = true;
 				}
 			} else {
