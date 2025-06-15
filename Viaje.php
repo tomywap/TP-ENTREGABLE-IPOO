@@ -100,7 +100,7 @@ class Viaje {
                     $this->setVImporte($row['vimporte']);
 
                     $objEmp = new Empresa();
-                    if ($objEmp->buscar($row['idempresa'])) {
+                    if ($objEmp->buscarEmpresa($row['idempresa'])) {
                         $this->setObjEmpresa($objEmp);
                     } else {
                         $this->setMsjOperacion("Empresa no encontrada.");
@@ -142,7 +142,7 @@ class Viaje {
                 while ($row = $objBase->Registro()) {
                     $objViaje = new Viaje();
                     $objEmpresa = new Empresa();
-                    $objEmpresa->buscar($row['idempresa']);
+                    $objEmpresa->buscarEmpresa($row['idempresa']);
 
                     $objResponsable = new ResponsableV();
                     $objResponsable->buscarResponsable($row['rnumeroempleado']);

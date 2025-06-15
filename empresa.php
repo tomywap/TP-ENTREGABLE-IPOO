@@ -3,13 +3,14 @@ class Empresa{
 	private $idempresa;
 	private $enombre;
 	private $edireccion;
+	private $mensaje;
 	
 
-	public function __construct($idempresa, $enombre, $edireccion) {
+	public function __construct() {
 
-		$this->idempresa = $idempresa;
-		$this->enombre = $enombre;
-		$this->edireccion = $edireccion;
+		$this->idempresa = "";
+		$this->enombre = "";
+		$this->edireccion = "";
 	}
 
 	public function getIdempresa() {
@@ -23,23 +24,32 @@ class Empresa{
 	public function getEnombre() {
 		return $this->enombre;
 	}
-
+	
 	public function setEnombre($value) {
 		$this->enombre = $value;
 	}
-
+	
 	public function getEdireccion() {
 		return $this->edireccion;
 	}
-
+	
 	public function setEdireccion($value) {
 		$this->edireccion = $value;
 	}
+	
+	
+	public function getMensaje() {
+		return $this->mensaje;
+	}
+	
+	public function setMensaje($value) {
+		$this->mensaje = $value;
+	}
 
 		public function cargarEmpresa($nombreEmpresa,$idEmpresa, $direccion){
-        $this->setNombreEmpresa ($nombreEmpresa); 
+        $this->setEnombre($nombreEmpresa); 
 		$this->setIdEmpresa($idEmpresa);        
-        $this->setDireccion($direccion);
+        $this->setEdireccion($direccion);
     }
 
 	public function buscarEmpresa(){
@@ -66,16 +76,16 @@ class Empresa{
 		public function insertar(){
         $base = new BaseDatos();
         $resp = false;
-        $consultaInsert = "INSERT INTO empresa(enombre,edireccion) VALUES ('".$this->getNombre()."','".$this->getDireccion()."')";
+        $consultaInsert = "INSERT INTO empresa(enombre,edireccion) VALUES ('".$this->getEnombre()."','".$this->getEdireccion()."')";
 
         	if($base->Iniciar()){
             	if($base->Ejecutar($consultaInsert)){
                 	$resp = true;
             	} else {
-                	$this->setMsjOperacion($base->getERROR());
+                	$this->setMensaje($base->getERROR());
             	}
         	} else {
-            	$this->setMsjOperacion($base->getERROR());
+            	$this->setMensaje($base->getERROR());
         	}
         	return $resp;
     	}
