@@ -109,9 +109,9 @@ class Empresa{
             if($base->Ejecutar($consultaEmpresa)){
                 $arregloEmpresa = array();
                 while($row2 = $base->Registro()){
-                    $dni = $row2['idempresa'];
-                    $nombre = $row2['enombre'];
-                    $apellido = $row2['edireccion'];
+                    $idEmpresa = $row2['idempresa'];
+                    $nombreEmpresa = $row2['enombre'];
+                    $direccion = $row2['edireccion'];
 					$objEmpresa = null;
                     $empresa = new Empresa();
                     $empresa->cargarEmpresa($nombreEmpresa,$idEmpresa, $direccion);
