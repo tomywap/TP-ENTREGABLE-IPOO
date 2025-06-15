@@ -74,9 +74,9 @@ class Persona{
         return $arregloPersona;
     }
 
-	public function buscarPersona(){
+	public function buscarPersona($dni){
 		$base = new BaseDatos();
-		$consultaPersona = "SELECT * FROM persona WHERE pdocumento=".$this->getDni();
+		$consultaPersona = "SELECT * FROM persona WHERE pdocumento=".$dni;
 		$resp = false;
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consultaPersona)) {

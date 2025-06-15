@@ -7,8 +7,7 @@ class Empresa{
 	
 
 	public function __construct() {
-
-		$this->idempresa = "";
+		$this->idempresa = null;
 		$this->enombre = "";
 		$this->edireccion = "";
 	}
@@ -46,15 +45,14 @@ class Empresa{
 		$this->mensaje = $value;
 	}
 
-		public function cargarEmpresa($nombreEmpresa,$idEmpresa, $direccion){
+		public function cargarEmpresa($nombreEmpresa, $direccion){
         $this->setEnombre($nombreEmpresa); 
-		$this->setIdEmpresa($idEmpresa);        
         $this->setEdireccion($direccion);
     }
 
-	public function buscarEmpresa(){
+	public function buscarEmpresa($id){
 		$base = new BaseDatos();
-		$consultaEmpresa = "SELECT * FROM empresa WHERE idempresa='" . $this->getIdempresa() . "'";
+		$consultaEmpresa = "SELECT * FROM empresa WHERE idempresa=" . $id . "";
 		$resp = false;
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consultaEmpresa)) {

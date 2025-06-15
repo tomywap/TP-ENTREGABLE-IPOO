@@ -87,7 +87,7 @@ function menuDeEmpresa(){
                     }
                 } else {
                     //Si el nombre no esta en uso encontes lo cargo
-                    $objEmp->cargarEmpresa(0, $nombreEmp, $direcEmp);
+                    $objEmp->cargarEmpresa($nombreEmp, $direcEmp);
                     if($objEmp->insertar()) {
                         echo "Su Empresa ha sido agregada.\n";
                     } else {
@@ -174,8 +174,8 @@ function menuDeEmpresa(){
                 if (!empty($empresas)) {
                     foreach ($empresas as $empresa) {
                         echo "Id de Empresa: " . $empresa->getIdEmpresa() . "\n";
-                        echo "Nombre de Empresa: " . $empresa->getNombre() . "\n";
-                        echo "Dirección: " . $empresa->getDireccion() . "\n";
+                        echo "Nombre de Empresa: " . $empresa->getEnombre() . "\n";
+                        echo "Dirección: " . $empresa->getEdireccion() . "\n";
                         echo "\n";
                     }
                 } else {
