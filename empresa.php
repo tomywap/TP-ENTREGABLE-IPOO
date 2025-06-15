@@ -73,7 +73,7 @@ class Empresa{
 		return $resp;
 	}
 
-		public function insertar(){
+	public function insertar(){
         $base = new BaseDatos();
         $resp = false;
         $consultaInsert = "INSERT INTO empresa(enombre,edireccion) VALUES ('".$this->getEnombre()."','".$this->getEdireccion()."')";
@@ -90,7 +90,7 @@ class Empresa{
         	return $resp;
     	}
 
-		public function modificar(){
+	public function modificar(){
 		$base = new BaseDatos();
 		$resp = false;
 		$consultaEmpresa = "UPDATE empresa SET enombre='".$this->getEnombre()."',edireccion='".$this->getEdireccion()."' WHERE idempresa=". $this->getIdempresa();
@@ -107,7 +107,7 @@ class Empresa{
 		}
 
 
-		public  function listarEmpresa($condicion=""){
+	public  function listarEmpresa($condicion=""){
         $arregloEmpresa = null;
         $base=new BaseDatos();
         $consultaEmpresa="SELECT * FROM empresa ";
@@ -122,7 +122,6 @@ class Empresa{
                     $idEmpresa = $row2['idempresa'];
                     $nombreEmpresa = $row2['enombre'];
                     $direccion = $row2['edireccion'];
-					$objEmpresa = null;
                     $empresa = new Empresa();
                     $empresa->cargarEmpresa($nombreEmpresa,$idEmpresa, $direccion);
                     array_push($arregloEmpresa, $empresa);
