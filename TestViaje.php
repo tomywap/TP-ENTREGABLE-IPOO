@@ -10,13 +10,16 @@ include_once 'Pasajero.php';
 $salir = false;
 
 do {
+    echo "\n-------------------------------\n";
     echo "Elija una sección para acceder \n";
     echo "1. Empresa \n";
     echo "2. Responsable \n";
     echo "3. Viaje \n";
     echo "4. Pasajero \n";
     echo "5. Salir \n";
+    echo "-------------------------------\n";
 
+    echo "OPCION>> ";
     $opcion = trim(fgets(STDIN));
 
     switch ($opcion) {
@@ -50,6 +53,7 @@ echo "Usted ha salido del menú de opciones.\n";
 
 function menuDeEmpresa(){
     do {
+        echo "\n-------------------------------\n";
         echo "Empresa \n";
         echo "1. Agregar \n";
         echo "2. Modificar \n";
@@ -57,8 +61,9 @@ function menuDeEmpresa(){
         echo "4. Buscar \n";
         echo "5. Listar \n";
         echo "6. Volver al menú \n";
-        echo "\n";
+        echo "-------------------------------\n";
 
+        echo "OPCION>> ";
         $opcionEmpr = trim(fgets(STDIN));
         $salirMenu = false;
 
@@ -188,6 +193,7 @@ function menuDeEmpresa(){
 
 function menuDeResponsableV() {
     do {
+        echo "\n-------------------------------\n";
         echo "Responsable \n";
         echo "1. Agregar \n";
         echo "2. Modificar \n";
@@ -195,8 +201,9 @@ function menuDeResponsableV() {
         echo "4. Buscar \n";
         echo "5. Listar \n";
         echo "6. Volver al menú \n";
-        echo "\n";
+        echo "-------------------------------\n";
 
+        echo "OPCION>> ";
         $opcionResp = trim(fgets(STDIN));
         $salirMenu = false;
 
@@ -356,6 +363,7 @@ function menuDeResponsableV() {
 
 function menuDeViaje(){
     do {
+        echo "\n-------------------------------\n";
         echo "Viaje \n";
         echo "1. Agregar \n";
         echo "2. Modificar \n";
@@ -364,8 +372,9 @@ function menuDeViaje(){
         echo "5. Listar viajes \n";
         echo "6. Listar Pasajeros del viaje \n";
         echo "7. Volver al menú \n";
-        echo "\n";
+        echo "-------------------------------\n";
 
+        echo "OPCION>> ";
         $opcionViaje = trim(fgets(STDIN));
         $salirMenu = false;
 
@@ -606,6 +615,7 @@ function menuDeViaje(){
 
 function menuDePasajero() {
     do {
+        echo "\n-------------------------------\n";
         echo "Pasajero \n";
         echo "1. Agregar \n";
         echo "2. Modificar \n";
@@ -613,8 +623,9 @@ function menuDePasajero() {
         echo "4. Buscar \n";
         echo "5. Listar \n";
         echo "6. Volver al menú \n";
-        echo "\n";
+        echo "-------------------------------\n";
 
+        echo "OPCION>> ";
         $opcionPasaj = trim(fgets(STDIN));
         $salirMenu = false;
 
