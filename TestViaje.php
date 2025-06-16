@@ -604,31 +604,6 @@ function menuDeViaje(){
     } while (!$salirMenu);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function menuDePasajero() {
     do {
         echo "Pasajero \n";
