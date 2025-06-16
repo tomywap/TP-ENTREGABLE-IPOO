@@ -1,53 +1,50 @@
 <?php
 class Empresa{
-	private $idempresa;
+	private $idEmpresa;
 	private $enombre;
 	private $edireccion;
 	private $mensaje;
-	
 
 	public function __construct() {
-		$this->idempresa = null;
-		$this->enombre = "";
-		$this->edireccion = "";
+		$this->idEmpresa = null;
+		$this->eNombre = "";
+		$this->eDireccion = "";
 	}
 
 	public function getIdempresa() {
-		return $this->idempresa;
+		return $this->idEmpresa;
 	}
-
 	public function setIdempresa($value) {
-		$this->idempresa = $value;
+		$this->idEmpresa = $value;
 	}
 
 	public function getEnombre() {
-		return $this->enombre;
+		return $this->eNombre;
 	}
-	
 	public function setEnombre($value) {
-		$this->enombre = $value;
+		$this->eNombre = $value;
 	}
-	
+
 	public function getEdireccion() {
-		return $this->edireccion;
+		return $this->eDireccion;
 	}
-	
 	public function setEdireccion($value) {
-		$this->edireccion = $value;
+		$this->eDireccion = $value;
 	}
-	
-	
+
 	public function getMensaje() {
 		return $this->mensaje;
 	}
-	
 	public function setMensaje($value) {
 		$this->mensaje = $value;
 	}
 
-		public function cargarEmpresa($nombreEmpresa, $direccion){
-        $this->setEnombre($nombreEmpresa); 
+	public function cargarEmpresa($nombreEmpresa, $direccion, $idEmpresa = null){
+		$this->setEnombre($nombreEmpresa); 
         $this->setEdireccion($direccion);
+		if ($idEmpresa !== null) {
+			$this->setIdEmpresa($idEmpresa);
+		}
     }
 
 	public function buscarEmpresa($id){
@@ -75,18 +72,17 @@ class Empresa{
         $base = new BaseDatos();
         $resp = false;
         $consultaInsert = "INSERT INTO empresa(enombre,edireccion) VALUES ('".$this->getEnombre()."','".$this->getEdireccion()."')";
-
-        	if($base->Iniciar()){
-            	if($base->Ejecutar($consultaInsert)){
-                	$resp = true;
-            	} else {
-                	$this->setMensaje($base->getERROR());
-            	}
-        	} else {
-            	$this->setMensaje($base->getERROR());
-        	}
-        	return $resp;
-    	}
+        if($base->Iniciar()){
+            if($base->Ejecutar($consultaInsert)){
+                $resp = true;
+            } else {
+                $this->setMensaje($base->getERROR());
+            }
+        } else {
+            $this->setMensaje($base->getERROR());
+        }
+        return $resp;
+    }
 
 	public function modificar(){
 		$base = new BaseDatos();
@@ -102,8 +98,7 @@ class Empresa{
             $this->setMensaje($base->getERROR());
         }
 		return $resp;
-		}
-
+	}
 
 	public  function listarEmpresa($condicion=""){
         $arregloEmpresa = null;
@@ -121,7 +116,7 @@ class Empresa{
                     $nombreEmpresa = $row2['enombre'];
                     $direccion = $row2['edireccion'];
                     $empresa = new Empresa();
-                    $empresa->cargarEmpresa($nombreEmpresa,$idEmpresa, $direccion);
+                    $empresa->cargarEmpresa($nombreEmpresa, $direccion, $idEmpresa);
                     array_push($arregloEmpresa, $empresa);
                 }
             }    else {
@@ -133,20 +128,19 @@ class Empresa{
         return $arregloEmpresa;
     }
 
-		public function eliminar(){
+	public function eliminar(){
 		$base = new BaseDatos();
 		$resp = false;
 		if($base->Iniciar()){
 			$consultaBorra = "DELETE FROM empresa WHERE idempresa=". $this->getIdempresa();
 			if($base->Ejecutar($consultaBorra)){
 				$resp = true;
-			}    else {
+			} else {
 				$this->setMensaje($base->getERROR());
-            }
-        }    else {
+			}
+        } else {
 			$this->setMensaje($base->getERROR());
         }
 		return $resp;
 	}
-
 }
