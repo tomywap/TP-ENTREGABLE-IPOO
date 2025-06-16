@@ -677,14 +677,19 @@ function menuDePasajero() {
             
                 // Crear el objeto Pasajero y cargar los datos
                 $objPasajero->cargarPasajero($documento, $nombre, $apellido, $telefono, $objViaje);
-            
+                if($objPasajero->buscarPersona($documento)){
+                    echo "El pasajero ya existe";
+                    break;
+                }elseif($objPasajero->insertarPasajero()){
                 // Insertar el pasajero en la base de datos
-                if ($objPasajero->insertarPasajero()) {
                     echo "El Pasajero ha sido agregado correctamente.\n";
                 } else {
                     echo "Error al agregar el Pasajero.\n";
                     echo "Mensaje de error: " . $objPasajero->getMensaje() . "\n";
                 }
+                }
+            
+
             break;
             
             case 2:
