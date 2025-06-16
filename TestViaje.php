@@ -687,9 +687,6 @@ function menuDePasajero() {
                     echo "Error al agregar el Pasajero.\n";
                     echo "Mensaje de error: " . $objPasajero->getMensaje() . "\n";
                 }
-                }
-            
-
             break;
             
             case 2:
