@@ -39,9 +39,9 @@ class ResponsableV extends Persona{
 		$this->setNumLicencia($numLicencia);
     }
 	
-	public function buscarResponsable(){
+	public function buscarResponsable($num){
 		$base = new BaseDatos();
-		$consultaResponsable = "SELECT * FROM responsable WHERE rnumeroempleado=" . $this->getNumEmpleado() . "";
+		$consultaResponsable = "SELECT * FROM responsable WHERE rnumeroempleado=" . $num . "";
 		$resp = false;
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consultaResponsable)) {

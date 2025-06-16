@@ -52,9 +52,9 @@ class Pasajero extends Persona{
     }
 	
 	//modificado para que funcione la busqueda por idpasajero, antes estaba por DNI y quedaba redundante la primary key.
-	public function buscarPasajero(){
+	public function buscarPasajero($id){
 		$base = new BaseDatos();
-		$consultaPasajero = "SELECT * FROM pasajero WHERE idpasajero='" . $this->getIdPasajero() . "'";
+		$consultaPasajero = "SELECT * FROM pasajero WHERE idpasajero=" . $id . "";
 		$resp = false;
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consultaPasajero)) {
