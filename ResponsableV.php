@@ -32,10 +32,9 @@ class ResponsableV extends Persona{
 		$this->mensaje = $value;
 	}
 	
-	public function cargarResponsable($nombre, $apellido, $numEmpleado, $numLicencia) {
+	public function cargarResponsable($nombre, $apellido, $numLicencia) {
 		$this->setNombre($nombre);
 		$this->setApellido($apellido);
-        $this->setNumEmpleado($numEmpleado);
 		$this->setNumLicencia($numLicencia);
     }
 	
@@ -81,7 +80,7 @@ class ResponsableV extends Persona{
 	public function modificarResponsable(){
 		$base = new BaseDatos();
 		$resp = false;
-        $consultaUpdate = "UPDATE responsable SET rnumerolicencia = '" . $this->getNumLicencia() . "', rnombre = '" . $this->getNombre() . "',rapellido = '" . $this->getApellido() . "' WHERE rnumeroempleado = '" . $this->getNumEmpleado() . "'";
+        $consultaUpdate = "UPDATE responsable SET rnombre = '" . $this->getNombre() . "', rapellido = '" . $this->getApellido() . "', rnumerolicencia = '" . $this->getNumLicencia() . "' WHERE rnumeroempleado = " . $this->getNumEmpleado();
         if ($base->Iniciar()) {
 			if ($base->Ejecutar($consultaUpdate)) {
 				$resp = true;
@@ -123,7 +122,7 @@ class ResponsableV extends Persona{
         return $arregloResponsables;
     }
 
-	public function eliminar(){
+	public function eliminarResponsable(){
 		$base = new BaseDatos();
 		$resp = false;
 		if($base->Iniciar()){

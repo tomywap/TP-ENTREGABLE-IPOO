@@ -1,5 +1,6 @@
 <?php
 include_once 'persona.php';
+include_once 'Viaje.php';
 
 class Pasajero extends Persona{
 	//Atributos
@@ -44,13 +45,13 @@ class Pasajero extends Persona{
 		$this->mensaje = $value;
 	}
 
-	public function cargarPasajero($dni, $nombre, $apellido, $tel, $idPasajero, $objViaje) {
+	public function cargarPasajero($dni, $nombre, $apellido, $tel,  $objViaje, $idPasajero = null) {
 		parent::cargarPersona($dni, $nombre, $apellido);
-        $this->setTel($tel);
-        $this->setObjViaje($objViaje);
-        $this->setIdPasajero($idPasajero);
-    }
-	
+		$this->setTel($tel);
+		$this->setObjViaje($objViaje);
+		$this->setIdPasajero($idPasajero);
+	}
+
 	//modificado para que funcione la busqueda por idpasajero, antes estaba por DNI y quedaba redundante la primary key.
 	public function buscarPasajero($id){
 		$base = new BaseDatos();
@@ -77,13 +78,15 @@ class Pasajero extends Persona{
 	}
 
 	//los ternarios estan porque en unos testeos me tiraba error si el objViaje era null (y eso pasa seguido).
+	//el error que teniamos al crear un pasajero y no se metia en las tablas lo solucioné agregando a las dos tablas al mismo tiempo con sus respectivos datos.
+	//para hacerlo mas piola tendriamos que ver como sincronizar los datos comunes entre tablas y con eso estaria.
 	public function insertarPasajero(){
 		$base = new BaseDatos();
 		$resp = false;
 		$idViaje = $this->getObjViaje() != null ? $this->getObjViaje()->getIdviaje() : null;
 		if(parent::insertar()){
-			$consultaPasajero = "INSERT INTO pasajero(pdocumento,ptelefono,idviaje) 
-			VALUES ('".$this->getDni()."','".$this->getTel()."',".($idViaje !== null ? "'$idViaje'" : "null").")";
+			$consultaPasajero = "INSERT INTO pasajero(pdocumento,pnombre,papellido,ptelefono,idviaje) 
+			VALUES ('".$this->getDni()."', '".$this->getNombre()."', '".$this->getApellido()."', '".$this->getTel()."', ".($idViaje !== null ? "'$idViaje'" : "null").")";
 				if($base->Iniciar()){
 					if($base->Ejecutar($consultaPasajero)){
 						$resp = true;
@@ -137,9 +140,13 @@ class Pasajero extends Persona{
                     $apellido = $row2['papellido'];
 					$tel = $row2['ptelefono'];
 					$idPasajero = $row2['idpasajero'];
-					$objViaje = null;
+
+					$idViaje = $row2['idviaje'];
+					$objViaje = new Viaje();
+					$objViaje->buscar($idViaje);
+
                     $pasajero = new Pasajero();
-                    $pasajero->cargarPasajero($dni, $nombre, $apellido, $tel, $idPasajero, $objViaje);
+                    $pasajero->cargarPasajero($dni, $nombre, $apellido, $tel, $objViaje, $idPasajero);
                     array_push($arregloPasajero, $pasajero);
                 }
             }    else {
@@ -152,7 +159,7 @@ class Pasajero extends Persona{
     }
 
 	//no testeado, pero deberia estar bien
-	public function eliminar(){
+	public function eliminarPasajero(){
 		$base = new BaseDatos();
 		$resp = false;
 		if($base->Iniciar()){

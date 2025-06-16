@@ -164,12 +164,7 @@ class Viaje {
         $objBase = new BaseDatos();
         $exito = false;
         if ($objBase->Iniciar()) {
-            $sql = "INSERT INTO viaje(vdestino, vcantmaxpasajeros, idempresa, rnumeroempleado, vimporte) VALUES (" .
-                   "'" . $this->getVDestino() . "', " .
-                   $this->getVCantMaxPasajeros() . ", " .
-                   $this->getObjEmpresa()->getIdEmpresa() . ", " .
-                   $this->getObjResponsable()->getNumEmpleado() . ", " .
-                   $this->getVImporte() . ")";
+            $sql = "INSERT INTO viaje(vdestino, vcantmaxpasajeros, idempresa, rnumeroempleado, vimporte) VALUES (" ."'" . $this->getVDestino() . "', " .$this->getVCantMaxPasajeros() . ", " .$this->getObjEmpresa()->getIdEmpresa() . ", " .$this->getObjResponsable()->getNumEmpleado() . ", " .$this->getVImporte() . ")";
             if ($objBase->Ejecutar($sql)) {
                 $exito = true;
             } else {
@@ -185,13 +180,7 @@ class Viaje {
         $objBase = new BaseDatos();
         $modificado = false;
         if ($objBase->Iniciar()) {
-            $sql = "UPDATE viaje SET " .
-                   "vdestino = '" . $this->getVDestino() . "', " .
-                   "vcantmaxpasajeros = " . $this->getVCantMaxPasajeros() . ", " .
-                   "idempresa = " . $this->getObjEmpresa()->getIdEmpresa() . ", " .
-                   "rnumeroempleado = " . $this->getObjResponsable()->getNumEmpleado() . ", " .
-                   "vimporte = " . $this->getVImporte() .
-                   " WHERE idviaje = " . $this->getIdViaje();
+            $sql = "UPDATE viaje SET " ."vdestino = '" . $this->getVDestino() . "', " ."vcantmaxpasajeros = " . $this->getVCantMaxPasajeros() . ", " ."idempresa = " . $this->getObjEmpresa()->getIdEmpresa() . ", " ."rnumeroempleado = " . $this->getObjResponsable()->getNumEmpleado() . ", " ."vimporte = " . $this->getVImporte() ." WHERE idviaje = " . $this->getIdViaje();
             if ($objBase->Ejecutar($sql)) {
                 $modificado = true;
             } else {
@@ -228,8 +217,6 @@ class Viaje {
     }
 
     public function __toString() {
-        return "ID: " . $this->getIdViaje() .
-               " | Destino: " . $this->getVDestino() .
-               " | Máx Pasajeros: " . $this->getVCantMaxPasajeros();
+        return "ID: " . $this->getIdViaje() ." | Destino: " . $this->getVDestino() ." | Máx Pasajeros: " . $this->getVCantMaxPasajeros();
     }
 }

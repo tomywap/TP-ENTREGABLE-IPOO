@@ -40,7 +40,7 @@ class Persona{
 		$this->mensaje = $value;
 	}
 	
-	public function cargarPersona($nombre, $apellido, $dni){
+	public function cargarPersona($dni, $nombre, $apellido){
 		$this->setNombre($nombre);
 		$this->setApellido($apellido);
 		$this->setDni($dni);
@@ -99,7 +99,7 @@ class Persona{
 		$base = new BaseDatos();
 		$resp = false;
 		$consultaPersona = "INSERT INTO persona(pdocumento,papellido,pnombre) 
-		VALUES (".$this->getDni().",'".$this->getApellido()."','".$this->getNombre()."')";
+		VALUES ('".$this->getDni()."','".$this->getApellido()."','".$this->getNombre()."')";
 		if($base->Iniciar()){
 			if($base->Ejecutar($consultaPersona)){
 				$resp = true;
@@ -145,25 +145,6 @@ class Persona{
 		return $resp;
 	}
 
-	// Metodo eliminar() pero recibe como parametro un numero de dni, condiciona si es numerico y elimina la entrada de la tabla cuyo pdocumento coincida con el dni ingresado.
-	// public function eliminar($dni){
-	// 	$base = new BaseDatos();
-	// 	$resp = false;
-	// 	if (is_numeric($dni)) {
-	// 		if($base->Iniciar()){
-	// 			$consultaBorra = "DELETE FROM persona WHERE pdocumento=". $dni;
-	// 			if($base->Ejecutar($consultaBorra)){
-	// 				$resp = true;
-	// 			}    else {
-	// 				$this->setMensaje($base->getERROR());
-	// 			}
-	// 		}    else {
-	// 				$this->setMensaje($base->getERROR());
-	// 		}
-	// 	}
-	// 	return $resp;
-	// }
-	
 	public function __toString()
 	{
 		return "\nNombre: " . $this->getNombre().
@@ -171,3 +152,4 @@ class Persona{
 		"\nDNI: " . $this->getDni();
 	}
 }
+?>
