@@ -26,29 +26,61 @@ class Viaje {
         $this->msjOperacion = '';
     }
 
-    public function getIdViaje() { return $this->idViaje; }
-    public function setIdViaje($id) { $this->idViaje = $id; }
+    public function getIdViaje() { 
+        return $this->idViaje; 
+    }
+    public function setIdViaje($id) { 
+        $this->idViaje = $id; 
+    }
 
-    public function getVDestino() { return $this->vDestino; }
-    public function setVDestino($destino) { $this->vDestino = $destino; }
+    public function getVDestino() { 
+        return $this->vDestino; 
+    }
+    public function setVDestino($destino) { 
+        $this->vDestino = $destino; 
+    }
 
-    public function getVCantMaxPasajeros() { return $this->vCantMaxPasajeros; }
-    public function setVCantMaxPasajeros($cantMax) { $this->vCantMaxPasajeros = $cantMax; }
+    public function getVCantMaxPasajeros() { 
+        return $this->vCantMaxPasajeros; 
+    }
+    public function setVCantMaxPasajeros($cantMax) { 
+        $this->vCantMaxPasajeros = $cantMax; 
+    }
 
-    public function getObjEmpresa() { return $this->objEmpresa; }
-    public function setObjEmpresa($objEmp) { $this->objEmpresa = $objEmp; }
+    public function getObjEmpresa() { 
+        return $this->objEmpresa; 
+    }
+    public function setObjEmpresa($objEmp) { 
+        $this->objEmpresa = $objEmp; 
+    }
 
-    public function getObjResponsable() { return $this->objResponsable; }
-    public function setObjResponsable($objResp) { $this->objResponsable = $objResp; }
+    public function getObjResponsable() { 
+        return $this->objResponsable; 
+    }
+    public function setObjResponsable($objResp) { 
+        $this->objResponsable = $objResp; 
+    }
 
-    public function getVImporte() { return $this->vImporte; }
-    public function setVImporte($importe) { $this->vImporte = $importe; }
+    public function getVImporte() { 
+        return $this->vImporte; 
+    }
+    public function setVImporte($importe) { 
+        $this->vImporte = $importe; 
+    }
 
-    public function getColPasajeros() { return $this->colPasajeros; }
-    public function setColPasajeros($col) { $this->colPasajeros = $col; }
+    public function getColPasajeros() { 
+        return $this->colPasajeros; 
+    }
+    public function setColPasajeros($col) { 
+        $this->colPasajeros = $col; 
+    }
 
-    public function getMsjOperacion() { return $this->msjOperacion; }
-    public function setMsjOperacion($msj) { $this->msjOperacion = $msj; }
+    public function getMsjOperacion() { 
+        return $this->msjOperacion; 
+    }
+    public function setMsjOperacion($msj) { 
+        $this->msjOperacion = $msj; 
+    }
 
     public function cargar($id, $destino, $cantMax, $objEmp, $objResp, $importe) {
         $this->setIdViaje($id);
