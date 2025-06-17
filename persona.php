@@ -39,14 +39,16 @@ class Persona{
 	public function setMensaje($value) {
 		$this->mensaje = $value;
 	}
-	
+
+	// creamos una funcion y cargamos otra vez para la base de datos directa
 	public function cargarPersona($dni, $nombre, $apellido){
 		$this->setNombre($nombre);
 		$this->setApellido($apellido);
 		$this->setDni($dni);
 	}
 
-	public  function listar($condicion=""){
+	// listar nos muestra toda la tambla de persona
+	public function listar($condicion=""){
         $arregloPersona = null;
         $base=new BaseDatos();
         $consultaPersonas="SELECT * FROM persona ";

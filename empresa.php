@@ -100,7 +100,7 @@ class Empresa{
 		return $resp;
 	}
 
-	public  function listarEmpresa($condicion=""){
+	public function listarEmpresa($condicion=""){
         $arregloEmpresa = null;
         $base=new BaseDatos();
         $consultaEmpresa="SELECT * FROM empresa ";
