@@ -47,7 +47,7 @@ class Persona{
 		$this->setDni($dni);
 	}
 
-	// listar nos muestra toda la tambla de persona
+	// listar nos muestra todos los datos de objeto persona de la base de datos
 	public function listar($condicion=""){
         $arregloPersona = null;
         $base=new BaseDatos();
@@ -75,7 +75,7 @@ class Persona{
         }
         return $arregloPersona;
     }
-
+//  busca una persona por su DNI y carga los datos en el objeto actual
 	public function buscarPersona($dni){
 		$base = new BaseDatos();
 		$consultaPersona = "SELECT * FROM persona WHERE pdocumento=".$dni;
@@ -96,7 +96,7 @@ class Persona{
         }
 		return $resp;
 	}
-
+// inserta una persona en la base de datos
 	public function insertar(){
 		$base = new BaseDatos();
 		$resp = false;
@@ -113,7 +113,7 @@ class Persona{
         }
 		return $resp;
 	}
-
+// modifica los datos de una persona en la base de datos
 	public function modificar(){
 		$base = new BaseDatos();
 		$resp = false;
@@ -130,7 +130,7 @@ class Persona{
 		return $resp;
 	}
 
-	//metodo eliminar() hecho en la call de ds.
+	// elimina una persona de la base de datos
 	public function eliminar(){
 		$base = new BaseDatos();
 		$resp = false;
@@ -146,7 +146,7 @@ class Persona{
         }
 		return $resp;
 	}
-
+// devuelve un string con los datos de la persona
 	public function __toString()
 	{
 		return "\nNombre: " . $this->getNombre().

@@ -240,13 +240,7 @@ class Viaje {
         return $eliminado;
     }
 
-    public function recorrerArray($array) {
-        $texto = "";
-        foreach ($array as $obj) {
-            $texto .= $obj . "\n";
-        }
-        return $texto;
-    }
+
 
     public function __toString() {
         return "ID: " . $this->getIdViaje() ." | Destino: " . $this->getVDestino() ." | Máx Pasajeros: " . $this->getVCantMaxPasajeros();

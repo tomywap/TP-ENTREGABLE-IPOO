@@ -77,9 +77,7 @@ class Pasajero extends Persona{
 		return $resp;
 	}
 
-	//los ternarios estan porque en unos testeos me tiraba error si el objViaje era null (y eso pasa seguido).
-	//el error que teniamos al crear un pasajero y no se metia en las tablas lo solucioné agregando a las dos tablas al mismo tiempo con sus respectivos datos.
-	//para hacerlo mas piola tendriamos que ver como sincronizar los datos comunes entre tablas y con eso estaria.
+	//modificado el insertar() para que inserte en la tabla pasajero
 	public function insertarPasajero(){
 		$base = new BaseDatos();
 		$resp = false;
@@ -100,9 +98,7 @@ class Pasajero extends Persona{
 		}
     }
 
-	//modificado el modificar() (xd)
-	//basicamente no hacia nada antes.
-	//los ternarios por los null etc etc.
+	// sirve para modificar los datos de un pasajero en la base de datos
 	public function modificarPasajero(){
 		$base = new BaseDatos();
 		$resp = false;
@@ -122,7 +118,7 @@ class Pasajero extends Persona{
 		return $resp;
 	}
 
-	//creado el metodo listarPasajeros().
+	// lista los pasajeros de la base de datos
 	public  function listarPasajeros($condicion=""){
         $arregloPasajero = null;
         $base=new BaseDatos();
@@ -158,7 +154,7 @@ class Pasajero extends Persona{
         return $arregloPasajero;
     }
 
-	//no testeado, pero deberia estar bien
+	// elimina un pasajero de la base de datos
 	public function eliminarPasajero(){
 		$base = new BaseDatos();
 		$resp = false;
