@@ -32,9 +32,10 @@ class ResponsableV extends Persona{
 		$this->mensaje = $value;
 	}
 	
-	public function cargarResponsable($nombre, $apellido, $numLicencia) {
+	public function cargarResponsable($nombre, $apellido, $numEmpleado, $numLicencia) {
 		$this->setNombre($nombre);
 		$this->setApellido($apellido);
+		$this->setNumEmpleado($numEmpleado);
 		$this->setNumLicencia($numLicencia);
     }
 	

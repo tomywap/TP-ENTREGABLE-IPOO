@@ -224,8 +224,9 @@ function menuDeResponsableV() {
                 $objRespV = new ResponsableV();
             
                 // Cargar los datos en el objeto
-                $objRespV->cargarResponsable($nombre, $apellido, $numLic);
-            
+               // $objRespV->cargarResponsable($nombre, $apellido, $numLic);
+            $objRespV->cargarResponsable($nombre, $apellido, $objRespV->getNumEmpleado(), $numLic);
+
                 // Verificar que los campos necesarios no estén vacíos
                 if ($nombre != "" && $apellido != "" && $numLic != "") {
                     // Intentar insertar el responsable
@@ -273,7 +274,10 @@ function menuDeResponsableV() {
                             $numLic = $objRespV->getNumLicencia();
                         }
         
-                        $objRespV->cargarResponsable($nombre, $apellido, $numLic);
+                       
+                        //$objRespV->cargarResponsable($nombre, $apellido, $numLic);
+                       $objRespV->cargarResponsable($nombre, $apellido, $nroEmpleado, $numLic);
+
                         if ($objRespV->modificarResponsable()) {
                             echo "El Responsable ha sido modificado.\n";
                         } else {
