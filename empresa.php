@@ -1,8 +1,8 @@
 <?php
 class Empresa{
 	private $idEmpresa;
-	private $enombre;
-	private $edireccion;
+	private $eNombre;
+	private $eDireccion;
 	private $mensaje;
 
 	public function __construct() {
