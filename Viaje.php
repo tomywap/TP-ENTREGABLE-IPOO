@@ -231,13 +231,8 @@ class Viaje {
     // Primero: setear en null el idviaje en los pasajeros de este viaje
     $consultaSetNullPasajeros = "UPDATE pasajero SET idviaje = NULL WHERE idviaje = " . $this->getIdViaje();
 
-    // Segundo: eliminar al responsable
-    $idResponsable = $this->getObjResponsable()->getNumEmpleado();
-    $consultaEliminarResponsable = "DELETE FROM responsable WHERE rnumeroempleado = " . $idResponsable;
-
     // Tercero: eliminar el viaje
     $consultaEliminarViaje = "DELETE FROM viaje WHERE idviaje = " . $this->getIdViaje();
-
     if ($objBase->Iniciar()) {
         if ($objBase->Ejecutar($consultaSetNullPasajeros)) {
             if ($objBase->Ejecutar($consultaEliminarResponsable)) {
@@ -255,7 +250,6 @@ class Viaje {
     } else {
         $this->setMsjOperacion($objBase->getERROR());
     }
-
     return $eliminado;
 }
 

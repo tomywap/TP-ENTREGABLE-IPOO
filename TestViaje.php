@@ -777,6 +777,8 @@ function menuDePasajero() {
                     $apellido = trim(fgets(STDIN));
                     echo "Ingrese el nuevo teléfono del Pasajero (dejar en blanco para mantener el actual): \n";
                     $telefono = trim(fgets(STDIN));
+                    echo "Ingrese el nuevo id del viaje del Pasajero : \n";
+                    $idViaje = trim(fgets(STDIN));
 
                     if (empty($nombre)) {
                         $nombre = $objPasajero->getNombre();
@@ -792,6 +794,9 @@ function menuDePasajero() {
                         $telefono = $objPasajero->getTel();
                     } else {
                         $objPasajero->setTel($telefono);
+                    }
+                    if (empty($idViaje)) {
+                        $objPasajero->setObjViaje($objPasajero->getObjViaje()->setIdViaje($idViaje));
                     }
 
                     if ($objPasajero->modificar()) {
