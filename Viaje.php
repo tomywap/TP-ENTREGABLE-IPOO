@@ -225,24 +225,41 @@ class Viaje {
     }
 
     public function eliminar() {
-        $objBase = new BaseDatos();
-        $eliminado = false;
-        if ($objBase->Iniciar()) {
-            $sql = "DELETE FROM viaje WHERE idviaje = " . $this->getIdViaje();
-            if ($objBase->Ejecutar($sql)) {
-                $eliminado = true;
+    $objBase = new BaseDatos();
+    $eliminado = false;
+
+    // Primero: setear en null el idviaje en los pasajeros de este viaje
+    $consultaSetNullPasajeros = "UPDATE pasajero SET idviaje = NULL WHERE idviaje = " . $this->getIdViaje();
+
+    // Segundo: eliminar al responsable
+    $idResponsable = $this->getObjResponsable()->getNumEmpleado();
+    $consultaEliminarResponsable = "DELETE FROM responsable WHERE rnumeroempleado = " . $idResponsable;
+
+    // Tercero: eliminar el viaje
+    $consultaEliminarViaje = "DELETE FROM viaje WHERE idviaje = " . $this->getIdViaje();
+
+    if ($objBase->Iniciar()) {
+        if ($objBase->Ejecutar($consultaSetNullPasajeros)) {
+            if ($objBase->Ejecutar($consultaEliminarResponsable)) {
+                if ($objBase->Ejecutar($consultaEliminarViaje)) {
+                    $eliminado = true;
+                } else {
+                    $this->setMsjOperacion($objBase->getERROR());
+                }
             } else {
                 $this->setMsjOperacion($objBase->getERROR());
             }
         } else {
             $this->setMsjOperacion($objBase->getERROR());
         }
-        return $eliminado;
+    } else {
+        $this->setMsjOperacion($objBase->getERROR());
     }
 
+    return $eliminado;
+}
 
 
-    public function __toString() {
-        return "ID: " . $this->getIdViaje() ." | Destino: " . $this->getVDestino() ." | Máx Pasajeros: " . $this->getVCantMaxPasajeros();
-    }
+
+
 }
