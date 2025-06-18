@@ -132,18 +132,15 @@ public function eliminar() {
     $base = new BaseDatos();
     $resp = false;
 
-    // Buscar los viajes relacionados con esta empresa
     $consultaViajes = "SELECT idviaje FROM viaje WHERE idempresa = " . $this->getIdempresa();
     if ($base->Iniciar()) {
         if ($base->Ejecutar($consultaViajes)) {
             while ($row = $base->Registro()) {
                 $objViaje = new Viaje();
                 if ($objViaje->buscar($row['idviaje'])) {
-                    $objViaje->eliminar(); // Elimina el viaje (también pasajero/responsable)
+                    $objViaje->eliminar();
                 }
             }
-
-            // Una vez eliminados los viajes, elimino la empresa
             $consultaBorra = "DELETE FROM empresa WHERE idempresa = " . $this->getIdempresa();
             if ($base->Ejecutar($consultaBorra)) {
                 $resp = true;
