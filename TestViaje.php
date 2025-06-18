@@ -68,31 +68,35 @@ function menuDeEmpresa(){
         $salirMenu = false;
 
         switch($opcionEmpr){
-            case 1:
-                echo "Ingrese el nombre de la empresa: \n";
-                $nombreEmp = trim(fgets(STDIN));
-                echo "Ingrese la dirección de la empresa: \n";
-                $direcEmp = trim(fgets(STDIN));
-                //Creo el objeto
-                $objEmp = new Empresa();
-                //Si el nombre ingresado ya existe no podrá agregarlo.
-                $verificarNombre = "enombre LIKE '%" . $nombreEmp . "%'";
-                $colecEmp = $objEmp->listarEmpresa($verificarNombre);
-                if(!empty($colecEmp)){
-                    echo "Este nombre ya esta en uso en otra empresa: \n";
-                    foreach ($colecEmp as $emp){
-                        echo $emp . "\n";//Le muestro la empresa en uso
-                    }
-                } else {
-                    //Si el nombre no esta en uso encontes lo cargo
-                    $objEmp->cargarEmpresa($nombreEmp, $direcEmp);
-                    if($objEmp->insertar()) {
-                        echo "Su Empresa ha sido agregada.\n";
-                    } else {
-                        echo "Ha habido un error al cargar su Empresa.\n";
-                    }
-                }
-            break;
+           case 1:
+              echo "Ingrese el nombre de la empresa: \n";
+              $nombreEmp = trim(fgets(STDIN));
+        // Validación para que solo se permitan letras y números
+                 if (!ctype_alnum($nombreEmp)) {
+                 echo "ERROR: El nombre solo puede contener letras y números, sin espacios ni símbolos.\n";
+                 break;
+        }
+
+           echo "Ingrese la dirección de la empresa: \n";
+           $direcEmp = trim(fgets(STDIN));
+ 
+           $objEmp = new Empresa();
+           $verificarNombre = "enombre LIKE '%" . $nombreEmp . "%'";
+           $colecEmp = $objEmp->listarEmpresa($verificarNombre);
+
+           if ($colecEmp && count($colecEmp) > 0) {
+           echo "Ya existe una empresa con ese nombre.\n";
+           } else {
+           $objEmp->cargarEmpresa($nombreEmp, $direcEmp);
+           $seAgrego = $objEmp->insertar();
+           if ($seAgrego) {
+                echo "Su Empresa ha sido agregada.\n";
+           } else {
+              echo "Error al agregar empresa: " . $objEmp->getMensaje() . "\n";
+           }
+       }
+    break;
+
 
             case 2:
                 echo "OPCIÓN MODIFICAR EMPRESA\n";
