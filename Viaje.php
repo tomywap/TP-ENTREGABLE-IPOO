@@ -139,10 +139,14 @@ class Viaje {
                     }
 
                     $objResp = new ResponsableV();
-                    if ($objResp->buscarResponsable($row['rnumeroempleado'])) {
-                        $this->setObjResponsable($objResp);
+                    if (!is_null($row['rnumeroempleado'])) {
+                        if ($objResp->buscarResponsable($row['rnumeroempleado'])) {
+                            $this->setObjResponsable($objResp);
+                        } else {
+                            $this->setMsjOperacion("Responsable no encontrado.");
+                        }
                     } else {
-                        $this->setMsjOperacion("Responsable no encontrado.");
+                        $this->setMsjOperacion("El viaje no tiene un responsable asignado.");
                     }
 
                     $this->actualizarPasajeros();

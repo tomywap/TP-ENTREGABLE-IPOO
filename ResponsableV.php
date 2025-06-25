@@ -126,10 +126,15 @@ class ResponsableV extends Persona{
 	public function eliminarResponsable(){
 		$base = new BaseDatos();
 		$resp = false;
+		$consultaNull = "UPDATE viaje SET rnumeroempleado = NULL WHERE rnumeroempleado = " . $this->getNumEmpleado();
 		if($base->Iniciar()){
 			$consultaBorra = "DELETE FROM responsable WHERE rnumeroempleado=". $this->getNumEmpleado();
-			if($base->Ejecutar($consultaBorra)){
-				$resp = true;
+			if($base->Ejecutar($consultaNull)){
+				if ($base->Ejecutar($consultaBorra)) {
+					$resp = true;
+				} else {
+					$this->setMensaje($base->getERROR());
+				}
 			}    else {
 				$this->setMensaje($base->getERROR());
             }
