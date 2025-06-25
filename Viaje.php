@@ -225,28 +225,27 @@ class Viaje {
     }
 
     public function eliminar() {
-    $objBase = new BaseDatos();
-    $eliminado = false;
+        $objBase = new BaseDatos();
+        $eliminado = false;
 
-    $consultaSetNullPasajeros = "UPDATE pasajero SET idviaje = NULL WHERE idviaje = " . $this->getIdViaje();
+        $consultaSetNullPasajeros = "UPDATE pasajero SET idviaje = NULL WHERE idviaje = " . $this->getIdViaje();
 
-    $consultaEliminarViaje = "DELETE FROM viaje WHERE idviaje = " . $this->getIdViaje();
-    if ($objBase->Iniciar()) {
-        if ($objBase->Ejecutar($consultaSetNullPasajeros)) {
-         
+        $consultaEliminarViaje = "DELETE FROM viaje WHERE idviaje = " . $this->getIdViaje();
+        if ($objBase->Iniciar()) {
+            if ($objBase->Ejecutar($consultaSetNullPasajeros)) {
                 if ($objBase->Ejecutar($consultaEliminarViaje)) {
                     $eliminado = true;
                 } else {
                     $this->setMsjOperacion($objBase->getERROR());
                 }
+            } else {
+                $this->setMsjOperacion($objBase->getERROR());
+            }
         } else {
             $this->setMsjOperacion($objBase->getERROR());
         }
-    } else {
-        $this->setMsjOperacion($objBase->getERROR());
+        return $eliminado;
     }
-    return $eliminado;
-}
 
 
 
